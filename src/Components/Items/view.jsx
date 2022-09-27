@@ -1,13 +1,19 @@
 import React from 'react';
 import './style.scss';
 
-const Item = (props)=>{
+const Item = ({ loading = false, ...props }) => {
     const item_data = props?.item_data ? props.item_data : null;
 
     if(!item_data?.id) return null;
-    return(
-        <div className='item-container' key={item_data.id}>
-            {item_data?.name}
+
+    // console.log({item_data});
+    
+    return (
+        <div className='item-container' {...props}>
+            <div className='item-name'>
+                {item_data?.name}
+            </div>
+            
         </div>
     );
 }

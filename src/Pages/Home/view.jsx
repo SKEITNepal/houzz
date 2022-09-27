@@ -1,10 +1,13 @@
-import React, { useState, useRef, useCallback, useEffect, forwardRef } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import Item from "Components/Items";
 
-import Placeholder from 'react-bootstrap/Placeholder';
+
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+
+import Spinner from "react-bootstrap/Spinner";
+import { useEffect } from 'react';
 
 const Homapage = (props) => {
     const defaultError = {
@@ -13,9 +16,9 @@ const Homapage = (props) => {
         message: 'Unknown Error',
     }
     const defaultpage = 1;
-    const defaultItems = 3;
+    const defaultItems = 10;
 
-    
+
     const [page, setPage] = useState(defaultpage);
     const [beers, setBeers] = useState([])
     const [loading, setLoading] = useState(false);
@@ -23,7 +26,6 @@ const Homapage = (props) => {
 
 
     async function getBeers() {
-        setPage(prev => prev + 1);
         setLoading(true);
         try {
             const beer_api = await axios.get('https://api.punkapi.com/v2/beers', {
@@ -33,15 +35,16 @@ const Homapage = (props) => {
                 }
             });
 
+            setPage(prev => prev + 1);
             //throw error even if error sent as response.
-            if(beer_api?.error) throw new Error(beer_api.error);
+            if (beer_api?.error) throw new Error(beer_api.error);
 
             //extract data and reset loader
             const data = Array.isArray(beer_api?.data) ? beer_api.data : [];
             setLoading(false);
-            
+
             // add beers to list
-            setBeers(current => [...current, ...data]);
+            if (!loading) setBeers(current => [...current, ...data]);
         } catch (e) {
             setError({
                 ...defaultError,
@@ -52,22 +55,28 @@ const Homapage = (props) => {
         }
     }
 
-    // function loadMore() {
-    //     setPage(prev => prev + 1);
-    // }
+    useEffect(() => {
+        getBeers();
 
-    // useEffect(() => {
-    //     getBeers();
+        return () => {
+            setBeers([]);
+            setPage(defaultpage);
+            setError(defaultError);
+            setLoading(false);
+        }
+    }, [props]);
 
-    //     // console.log({page}, {beers});
-    //     //remove all beers when unmounted
-    //     return () => {
-    //         setBeers([]);
-    //         setPage(defaultpage);
-    //         setError(defaultError);
-    //         setLoading(false);
-    //     };
-    // }, []);
+
+    //scroll to bottom
+    const loadMoreButton = useRef(null)
+
+    const scrollToBottom = () => {
+        loadMoreButton.current?.scrollIntoView({ block: "start", behavior: "smooth" })
+    }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [loading]);
 
     return (
         <section >
@@ -80,15 +89,21 @@ const Homapage = (props) => {
             {!!beers.length && (
                 <div>
                     {beers.map((item_data, index) => (
-                        <Item item_data={item_data} />
+                        <Item item_data={item_data} key={item_data?.id} />
                     ))}
                 </div>
             )}
-            <Button onClick={getBeers}>Load More</Button>
-
-            {loading && (
-                <>Loading...</>
-            )}
+            <Button onClick={getBeers} ref={loadMoreButton}>{loading ?
+                <span>
+                    <Spinner animation="grow" variant="info" />
+                    <Spinner animation="grow" variant="secondary" />
+                </span> :
+                <span>
+                    Load More
+                    <Spinner animation="grow" variant="secondary" />
+                </span>
+            }</Button>
+            
         </section>
     );
 }
