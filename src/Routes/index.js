@@ -11,6 +11,7 @@ import Paths from "./paths";
 //dynamic import of home page
 const HomePage = lazy(() => import('Pages/Home'));
 
+
 const Pages = (props) => {
   return ( 
   <BrowserRouter>
