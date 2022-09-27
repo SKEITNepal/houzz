@@ -30,9 +30,7 @@ const Homapage = (props) => {
     async function getBeers() {
         setLoading(true);
 
-        console.log("Get Beer Counter: ", counter);
-        counter++;
-
+        console.log("Get Beer Counter");
         try {
             const beer_api = await axios.get('https://api.punkapi.com/v2/beers', {
                 params: {
