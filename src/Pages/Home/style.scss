@@ -7,10 +7,10 @@
         border: 1px solid var(--loader-bg);
         color: var(--loader-color);
         width: 200px;
-        font-size: .8em;
+        font-size: .8rem;
         margin: 0 auto;
-        margin-bottom: 30px;
-        margin-top: 30px;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
         // transition: transform 0.3s;
 
         /*Overriting primary button*/
@@ -30,7 +30,7 @@
             font-weight: bold;
 
             .icon{
-                stroke-width: 1.25px;
+                stroke-width: 0.12rem;
             }
         }
     }

@@ -14,8 +14,14 @@ code {
 
 :root{
   --beer-title-color: #080808;
-  --beer-subtitle-color: #D39B2B;
+  --beer-tagline-color: #ffab02;
+  --beer-container-bgcolor: #4da6f91c;
   --beer-disc-color: #333333;
+  --beer-box-shadow: #c0b9b9;
   --loader-color: #609FD9;
   --loader-bg: #FFFFFF;
+
+  --default-bg:#FFFFFF; 
+
+  --beer-container-height: 150px;
 }
