@@ -3,20 +3,20 @@ import './style.scss';
 
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import { useState } from 'react';
 
-const Item = ({ loading = false, ...props }) => {
-    const item_data = props?.item_data ? props.item_data : null;
+const Item = ({ loading = false, item_data, ...props }) => {
     if (!item_data?.id) return null;
 
     const ingredients = item_data?.ingredients ? Object.keys(item_data.ingredients) : [];
     let ingredients_elem = <span>Ingredients: <br/> {ingredients.toString()}</span>;
 
+    console.log("Rendering... ", item_data.id);
+
     return (
         <div className='item-container' {...props}>
             <div className='left-img'>
                 <OverlayTrigger overlay={<Tooltip>{ingredients_elem}</Tooltip>}>
-                    <img src={item_data?.image_url} />
+                    <img src={item_data?.image_url} alt={item_data?.name}/>
                 </OverlayTrigger>
             </div>
             <div className='right-content'>

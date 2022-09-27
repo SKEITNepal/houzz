@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import Item from "Components/Items";
 
@@ -7,10 +7,10 @@ import './style.scss';
 
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import {BsChevronDown} from "react-icons/bs";
+import { BsChevronDown, BsArrowCounterclockwise } from "react-icons/bs";
 import Spinner from "react-bootstrap/Spinner";
-import { useEffect } from 'react';
 
+let counter = 0;
 const Homapage = (props) => {
     const defaultError = {
         error: false,
@@ -29,6 +29,10 @@ const Homapage = (props) => {
 
     async function getBeers() {
         setLoading(true);
+
+        console.log("Get Beer Counter: ", counter);
+        counter++;
+
         try {
             const beer_api = await axios.get('https://api.punkapi.com/v2/beers', {
                 params: {
@@ -46,7 +50,7 @@ const Homapage = (props) => {
             setLoading(false);
 
             // add beers to list
-            if (!loading) setBeers(current => [...current, ...data]);
+            setBeers(current => [...current, ...data]);
         } catch (e) {
             setError({
                 ...defaultError,
@@ -54,6 +58,8 @@ const Homapage = (props) => {
                 code: e.code,
                 message: e.message
             });
+
+            setLoading(false);
         }
     }
 
@@ -66,7 +72,7 @@ const Homapage = (props) => {
             setError(defaultError);
             setLoading(false);
         }
-    }, [props]);
+    }, []);
 
 
     //scroll to bottom
@@ -81,20 +87,23 @@ const Homapage = (props) => {
     }, [loading]);
 
     return (
-        <section >
+        <section className='homepage'>
             {error.error &&
                 <Alert variant="danger" onClose={() => setError(defaultError)} dismissible>
                     <Alert.Heading>{error.code}</Alert.Heading>
                     <p>{error.message}</p>
-                </Alert>}
-
+                </Alert>
+            }
             {!!beers.length && (
-                <div>
+                <div className='item'>
                     {beers.map((item_data) => (
                         <Item item_data={item_data} key={'p_' + page + 'i_' + item_data?.id} />
                     ))}
                 </div>
             )}
+
+            {/*Load more button at the end */}
+            {/*Note: it had not become seperate component because there is a ref on the button */}
             <div className='load-more-container'>
                 <Button
                     className='load-more-botton'
@@ -109,11 +118,12 @@ const Homapage = (props) => {
                         role="status"
                         aria-hidden="true"
                     /> :
-                    <span className='text'>
-                        Load More &nbsp;
-                        <BsChevronDown className='icon'/>
-                    </span>
-                    }</Button>
+                    <>
+                        {!error.error && <span className='text'>Load More &nbsp;<BsChevronDown className='icon' /> </span>}
+                        {error.error && <span className='text'><BsArrowCounterclockwise />&nbsp;Try Again</span>}
+                    </>
+                    }
+                </Button>
             </div>
 
         </section>

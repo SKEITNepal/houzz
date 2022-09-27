@@ -1,36 +1,47 @@
-.load-more-container {
-    width: 100%;
-    display: flex;
+.homepage{
+    margin: 1%;
 
-    .load-more-botton {
-        background-color: var(--loader-bg);
-        border: 1px solid var(--loader-bg);
-        color: var(--loader-color);
-        width: 200px;
-        font-size: .8rem;
-        margin: 0 auto;
-        margin-bottom: 2rem;
-        margin-top: 2rem;
-        // transition: transform 0.3s;
+    .item{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-        /*Overriting primary button*/
-        &:hover{
-            // transform: scale(110%);
-            border: 1px solid var(--loader-bg);
+    /*End Section*/
+    .load-more-container {
+        width: 100%;
+        display: flex;
+    
+        .load-more-botton {
             background-color: var(--loader-bg);
-            color: var(--loader-color);
-        }
-        &:active{
             border: 1px solid var(--loader-bg);
-            background-color: var(--loader-bg);
             color: var(--loader-color);
-        }
-        .text{
-            text-align: center;
-            font-weight: bold;
-
-            .icon{
-                stroke-width: 0.12rem;
+            width: 200px;
+            font-size: .8rem;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            // transition: transform 0.3s;
+    
+            /*Overriting primary button*/
+            &:hover{
+                // transform: scale(110%);
+                border: 1px solid var(--loader-bg);
+                background-color: var(--loader-bg);
+                color: var(--loader-color);
+            }
+            &:active{
+                border: 1px solid var(--loader-bg);
+                background-color: var(--loader-bg);
+                color: var(--loader-color);
+            }
+            .text{
+                text-align: center;
+                font-weight: bold;
+    
+                .icon{
+                    stroke-width: 0.12rem;
+                }
             }
         }
     }
