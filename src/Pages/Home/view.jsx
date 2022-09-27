@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import Item from "Components/Items/view.jsx";
 
@@ -43,8 +43,15 @@ const Homapage = (props) => {
             const data = Array.isArray(beer_api?.data) ? beer_api.data : [];
             setLoading(false);
 
-            // add beers to list
-            setBeers(current => [...current, ...data]);
+            // add new beer coponents to list
+            for (const beer of data) {
+                setBeers(current => [...current, getBeerComponent(beer)]);
+            }
+
+            {/* Alternative method: instead of adding component, it adds the value and create component later on.*/ }
+            // setBeers(current => [...current, ...data]);
+
+
         } catch (e) {
             setError({
                 ...defaultError,
@@ -80,6 +87,8 @@ const Homapage = (props) => {
         scrollToBottom()
     }, [beers]);
 
+    const getBeerComponent = (item_data) => <Item item_data={item_data} key={'p_' + page + 'i_' + item_data?.id} />;
+
     return (
         <section className='homepage'>
             {error.error &&
@@ -88,13 +97,21 @@ const Homapage = (props) => {
                     <p>{error.message}</p>
                 </Alert>
             }
-            {!!beers.length && (
+
+            {/*Loading all beers component*/}
+            {/* Note: this method is needed because this method can cache previously loaded beers and it doesn't need to re-render everthing each time */}
+            <div className='items'>
+                {beers}
+            </div>
+
+            {/* Alternative method: it loads the beer but it will  re-render everything from 0 to n, since it is recreating all beers on each loop.*/}
+            {/* {!!beers.length && (
                 <div className='items'>
                     {beers.map((item_data) => (
                         <Item item_data={item_data} key={'p_' + page + 'i_' + item_data?.id} />
                     ))}
                 </div>
-            )}
+            )} */}
 
             {/*Load more button at the end */}
             {/*Note: it had not become seperate component because there is a ref on the button */}
