@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import axios from 'axios';
 import Item from "Components/Items/view.jsx";
 
@@ -9,8 +9,6 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import { BsChevronDown, BsArrowCounterclockwise } from "react-icons/bs";
 import Spinner from "react-bootstrap/Spinner";
-import { useMemo } from 'react';
-import { useCallback } from 'react';
 
 const Homapage = (props) => {
     const defaultError = {
@@ -25,8 +23,6 @@ const Homapage = (props) => {
     const [beers, setBeers] = useState([])
     const [error, setError] = useState(defaultError)
     const [loading, setLoading] = useState(false);
-
-    let all_beers = [];
 
 
     async function getBeers() {
@@ -48,9 +44,7 @@ const Homapage = (props) => {
             setLoading(false);
 
             // add beers to list
-            // setBeers(current => [...current, ...data]);
-            setBeers(data);
-
+            setBeers(current => [...current, ...data]);
         } catch (e) {
             setError({
                 ...defaultError,
@@ -85,6 +79,7 @@ const Homapage = (props) => {
     useEffect(() => {
         scrollToBottom()
     }, [beers]);
+
     return (
         <section className='homepage'>
             {error.error &&
@@ -93,19 +88,11 @@ const Homapage = (props) => {
                     <p>{error.message}</p>
                 </Alert>
             }
-            {/* {!!oldBeers.length && (
-                all_beers
-            )} */}
-
             {!!beers.length && (
                 <div className='items'>
-                    {all_beers}
-                    {beers.map((item_data) => {
-                        const memoItem = <Item item_data={item_data} key={'p_' + page + 'i_' + item_data?.id} />;
-                        all_beers.push(memoItem);
-                        return memoItem;
-                    }
-                    )}
+                    {beers.map((item_data) => (
+                        <Item item_data={item_data} key={'p_' + page + 'i_' + item_data?.id} />
+                    ))}
                 </div>
             )}
 

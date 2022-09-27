@@ -10,7 +10,7 @@ const Item = ({ item_data, ...props }) => {
     const ingredients = item_data?.ingredients ? Object.keys(item_data.ingredients) : [];
     let ingredients_elem = <span>Ingredients: <br /> {ingredients.toString()}</span>;
 
-    console.log("Rendering... ", item_data.id);
+    // console.log("Rendering... ", item_data.id);
 
     return (
         <div className='item-container' {...props}>
