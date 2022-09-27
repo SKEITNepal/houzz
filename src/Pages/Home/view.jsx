@@ -7,7 +7,7 @@ import './style.scss';
 
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-
+import {BsChevronDown} from "react-icons/bs";
 import Spinner from "react-bootstrap/Spinner";
 import { useEffect } from 'react';
 
@@ -110,7 +110,8 @@ const Homapage = (props) => {
                         aria-hidden="true"
                     /> :
                     <span className='text'>
-                        Load More
+                        Load More &nbsp;
+                        <BsChevronDown className='icon'/>
                     </span>
                     }</Button>
             </div>
