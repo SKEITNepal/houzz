@@ -12,7 +12,10 @@ code {
     monospace;
 }
 
-$beer-title-color: #080808;
-$beer-subtitle-color: #D39B2B;
-$beer-disc-color: #333333;
-$loader-color: #609FD9;
+:root{
+  --beer-title-color: #080808;
+  --beer-subtitle-color: #D39B2B;
+  --beer-disc-color: #333333;
+  --loader-color: #609FD9;
+  --loader-bg: #FFFFFF;
+}

@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import Item from "Components/Items";
 
+import './style.scss';
+
 
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -88,22 +90,31 @@ const Homapage = (props) => {
 
             {!!beers.length && (
                 <div>
-                    {beers.map((item_data, index) => (
-                        <Item item_data={item_data} key={item_data?.id} />
+                    {beers.map((item_data) => (
+                        <Item item_data={item_data} key={'p_' + page + 'i_' + item_data?.id} />
                     ))}
                 </div>
             )}
-            <Button onClick={getBeers} ref={loadMoreButton}>{loading ?
-                <span>
-                    <Spinner animation="grow" variant="info" />
-                    <Spinner animation="grow" variant="secondary" />
-                </span> :
-                <span>
-                    Load More
-                    <Spinner animation="grow" variant="secondary" />
-                </span>
-            }</Button>
-            
+            <div className='load-more-container'>
+                <Button
+                    className='load-more-botton'
+                    onClick={getBeers}
+                    ref={loadMoreButton}
+                    disabled={loading}
+                >{loading ?
+                    <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    /> :
+                    <span className='text'>
+                        Load More
+                    </span>
+                    }</Button>
+            </div>
+
         </section>
     );
 }

@@ -1,0 +1,25 @@
+.load-more-container {
+    width: 100%;
+    display: flex;
+
+    .load-more-botton {
+        background-color: var(--loader-bg);
+        border: 1px solid var(--loader-bg);
+        color: var(--loader-color);
+        width: 200px;
+        font-size: 1em;
+        margin: 0 auto;
+        margin-bottom: 30px;
+
+        /*Overriting primary button*/
+        &:hover{
+            border: 1px solid var(--loader-color);
+            background-color: var(--loader-bg);
+            color: var(--loader-color);
+        }
+        .text{
+            font-size: 1em;
+            text-align: center;
+        }
+    }
+}
